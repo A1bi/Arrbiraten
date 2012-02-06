@@ -3,7 +3,7 @@ include('include/main.php');
 kickGuests();
 
 loadComponent("pics");
-$pics = new pics("profile_pics");
+$pics = new pics("profile", "profile_pics");
 
 $pics->handleActions();
 

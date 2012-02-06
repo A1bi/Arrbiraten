@@ -1,6 +1,6 @@
 {include file="head.tpl" title="Dein Steckbrief"}
-<form action="?page=profile" method="post">
-<div class="profile">
+<form action="/profile" method="post">
+<div class="section">
 	<div>
 		Hier kannst du deinen persönlichen Steckbrief für die Abizeitung ausfüllen. Du kannst ihn auch später noch bis zum <b>8. Februar 2012</b> beliebig oft ändern.
 	</div>
@@ -22,8 +22,8 @@
 	</div>
 </div>
 </form>
-<form action="?page=profile" method="post" enctype="multipart/form-data">
-<div class="profile pics" style="margin-top: 30px;">
+<form action="/pics" method="post" enctype="multipart/form-data">
+<div class="section pics">
 	<div>
 		Hier kannst du Fotos hochladen, die unter deinem Steckbrief abgedruckt werden sollen. Besonders erwünscht sind dabei auch Kinderfotos ;)
 	</div>

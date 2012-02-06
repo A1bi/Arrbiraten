@@ -158,40 +158,43 @@ table {
 }
 
 /* --- profile --- */
-.profile .box {
+.section {
+	margin-top: 30px;
+}
+.section .box {
 	margin: auto;
 	margin-top: 20px;
 	width: 80%;
 	text-align: left;
 }
-.profile .caption {
+.section .caption {
 	width: 40%;
 }
-.profile .caption div {
+.section .caption div {
 	font-size: 13px;
 	color: #8c8c8c;
 }
-.profile .value {
+.section .value {
 	width: 60%;
 }
-.profile td {
+.section td {
 	padding: 5px;
 	border-top: 1px solid #E9E9E9;
 	vertical-align: middle;
 }
-.profile tr:first-child td {
+.section tr:first-child td {
 	border-top: none;
 }
-.profile table input {
+.section table input {
 	width: 98%;
 	height: 20px;
 	font-size: 14px;
 }
-.profile .submit {
+.section .submit {
 	margin-top: 20px;
 	text-align: center;
 }
-.profile .submit .btn {
+.section .submit .btn {
 	width: 90px;
 	height: 35px;
 	font-size: 14px;
