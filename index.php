@@ -1,22 +1,12 @@
 <?php
 include('include/main.php');
 
-define('IN_PHPBB', true);
-$phpbb_root_path = './forum/';
-$phpEx = "php";
-include($phpbb_root_path . 'common.php');
 
-// Start session management
-$user->session_begin();
-$auth->acl($user->data);
-$user->setup();
-
-
-if($user->data['is_registered'])
+if($_user->data['is_registered'])
 {
 	// assign user info for templates
-	$_tpl->assign("username", $user->data['username']);
-	$_tpl->assign("sid", $user->session_id);
+	$_tpl->assign("username", $_user->data['username']);
+	$_tpl->assign("sid", $_user->session_id);
 	
 	// which page is requested ?
 	if ($_GET['page'] == "profile") {
@@ -34,7 +24,7 @@ if($user->data['is_registered'])
 			if (move_uploaded_file($_FILES['file']['tmp_name'], $filename)) {
 				chmod($filename, 0777);
 
-				$db->sql_query('INSERT INTO profile_pics VALUES (null, "'.$id.'", "'.$user->data['user_id'].'",'.time().')');
+				$_db->query('INSERT INTO profile_pics VALUES (null, ?, ?, ?)', array($id, $_user->data['user_id'], time()));
 				$resize->resizepic($id, "pics", "medium");
 			}
 			
@@ -43,13 +33,12 @@ if($user->data['is_registered'])
 		
 		// deleted photo ?
 		if ($_GET['action'] == "del") {
-			$result = $db->sql_query('SELECT id, pic FROM profile_pics WHERE id = '.intval($_GET['id']).' AND user = '.$user->data['user_id']);
-			$row = $db->sql_fetchrow($result);
-			
+			$result = $_db->query('SELECT id, pic FROM profile_pics WHERE id = ? AND user = ?', array($_GET['id'], $_user->data['user_id']));
+			$row = $_db->fetchAssoc($result);
 			
 			// correct id ?
 			if (!empty($row['pic'])) {
-				$db->sql_query('DELETE FROM profile_pics WHERE id = '.$row['id']);
+				$_db->query('DELETE FROM profile_pics WHERE id = ?', array($row['id']));
 				
 				loadComponent("resize");
 				$resize = new resize;
@@ -100,14 +89,14 @@ if($user->data['is_registered'])
 		);
 		
 		foreach ($fields as $key => $field) {
-			$result = $db->sql_query('SELECT id, value FROM profile_fields WHERE field = "'.$key.'" AND user = '.$user->data['user_id']);
-			$row = $db->sql_fetchrow($result);
+			$result = $_db->query('SELECT id, value FROM profile_fields WHERE field = ? AND user = ?', array($key, $_user->data['user_id']));
+			$row = $_db->fetchAssoc($result);
 			$fields[$key]['value'] = $row['value'];
 			
 			if (empty($row['id'])) {
-				$db->sql_query('INSERT INTO profile_fields VALUES (null, "'.$key.'", '.$user->data['user_id'].', "", 0)');
+				$_db->query('INSERT INTO profile_fields VALUES (null, ?, ?, "", 0)', array($key, $_user->data['user_id']));
 			} else if ($_POST['save'] && $_POST[$key] != $row['value']) {
-				$db->sql_query('UPDATE profile_fields SET value = "'.$db->sql_escape($_POST[$key]).'", lastchange = '.time().' WHERE id = '.$row['id']);
+				$_db->query('UPDATE profile_fields SET value = ?, lastchange = ? WHERE id = ?', array($_POST[$key], time(), $row['id']));
 			}
 		}
 		
@@ -118,8 +107,8 @@ if($user->data['is_registered'])
 		setcookie("update", $_config['update'], time()+31536000, "/");
 		
 		// fetch pics
-		$result = $db->sql_query('SELECT id, pic FROM profile_pics WHERE user = '.$user->data['user_id']);
-		$pics = $db->sql_fetchrowset($result);
+		$result = $_db->query('SELECT id, pic FROM profile_pics WHERE user = ?', array($_user->data['user_id']));
+		$pics = $_db->fetchAll($result);
 		
 		$_tpl->assign("fields", $fields);
 		$_tpl->assign("pics", $pics);
