@@ -185,10 +185,10 @@ table {
 .section tr:first-child td {
 	border-top: none;
 }
-.section table input {
+.section table textarea {
 	width: 98%;
-	height: 20px;
-	font-size: 14px;
+	height: 55px;
+	font-size: 13px;
 }
 .section .submit {
 	margin-top: 20px;

@@ -12,7 +12,7 @@
 					{if $field.caption == ""}{$field.real}:{else}{$field.caption}:
 					<div>({$field.real})</div>{/if}
 				</td>
-				<td class="value"><input type="text" name="{$key}" value="{$field.value|escape}" /></td>
+				<td class="value"><textarea name="{$key}">{$field.value|escape}</textarea></td>
 			</tr>
 			{/foreach}
 		</table>
