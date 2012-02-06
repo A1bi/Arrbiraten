@@ -1,0 +1,13 @@
+/* --- fixes for fucking internet explorer -- */
+.content {
+	background: #E4E8EB;
+}
+.box {
+	background: #f3f3f3;
+}
+.navigation .box a {
+	color: #000000;
+}
+.navigation .box a:hover {
+	color: #cccccc;
+}

@@ -1,0 +1,233 @@
+body {
+	font-family: "Arial", "DejaVu Sans";
+	font-size: 15px;
+	margin: auto;
+	margin-top: 50px;
+	position: relative;
+	width: 70%;
+}
+img {
+	border: none;
+}
+a {
+	text-decoration: underline;
+	color: #8c8c8c;
+}
+a:hover {
+	text-decoration: none;
+}
+table {
+	width: 100%;
+}
+
+/* --- common classes --- */
+.btn {
+	width: 60px;
+	height: 27px;
+}
+
+/* --- main layout elements --- */
+.headline {
+	padding-left: 40px;
+	font-size: 38px;
+	text-shadow: #cccccc 0px 0px 3px;
+	font-weight: bold;
+	text-decoration: none;
+	width: 100%;
+	display: inline-block;
+	color: #000000;
+}
+.content {
+	position: relative;
+	border-radius: 10px;
+	background: -moz-linear-gradient(bottom, #E4E8EB, #ffffff);
+	background: -webkit-linear-gradient(bottom, #E4E8EB, #ffffff);
+	background: -ms-linear-gradient(bottom, #E4E8EB, #ffffff);
+	background: -o-linear-gradient(bottom, #E4E8EB, #ffffff);
+	padding: 10px;
+	padding-top: 40px;
+	min-height: 400px;
+	box-shadow: #cccccc 0px 0px 8px;
+	margin-bottom: 30px;
+}
+.content .userinfo {
+	position: absolute;
+	top: 8px;
+	right: 10px;
+	text-align: right;
+	font-size: 13px;
+}
+.box {
+	background: -moz-linear-gradient(top, #E4E8EB, #ffffff);
+	background: -webkit-linear-gradient(top, #E4E8EB, #ffffff);
+	background: -ms-linear-gradient(top, #E4E8EB, #ffffff);
+	background: -o-linear-gradient(top, #E4E8EB, #ffffff);
+	border-radius: 10px;
+	padding: 20px;
+	text-align: center;
+	box-shadow: #cccccc 0px 0px 20px inset;
+}
+
+/* --- index --- */
+.navigation {
+	position: relative;
+	width: 90%;
+	margin: auto;
+}
+.navigation .box {
+	float: left;
+	width: 40%;
+	margin: 10px;
+}
+.navigation .hl {
+	font-size: 24px;
+	text-shadow: #000000 0px 0px 5px;
+	color: #ffffff;
+	margin-bottom: 10px;
+	display: inline-block;
+	width: 100%;
+	text-decoration: none;
+}
+.navigation .hl:hover {
+	color: #f3f3f3;
+}
+.navigation .update {
+	position: absolute;
+	top: 10px;
+	right: -10px;
+	color: #FFA34F;
+	font-size: 23px;
+	-webkit-transform: rotate(30deg);
+	-moz-transform: rotate(30deg);
+	text-shadow: 1px 1px 2px #cccccc;
+	-webkit-animation-name: blink;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: ease-in-out;
+	-webkit-animation-direction: alternate;
+	-moz-animation-name: blink;
+	-moz-animation-duration: 1s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-timing-function: ease-in-out;
+	-moz-animation-direction: alternate;
+}
+@-webkit-keyframes blink {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+@-moz-keyframes blink {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+/* --- login --- */
+.box.login {
+	width: 50%;
+	margin: auto;
+	margin-top: 80px;
+}
+.login table {
+	width: 70%;
+	margin: auto;
+}
+.login table td {
+	text-align: left;
+}
+.login table input {
+	width: 100%;
+}
+.login .alert {
+	margin: 10px 0px 20px 0px;
+	font-size: 16px;
+}
+.login .alert.msg {
+	font-size: 14px;
+	color: #DD0000;
+}
+.login .actions {
+	font-size: 12px;
+	margin-top: 20px;
+}
+
+/* --- profile --- */
+.profile .box {
+	margin: auto;
+	margin-top: 20px;
+	width: 80%;
+	text-align: left;
+}
+.profile .caption {
+	width: 40%;
+}
+.profile .caption div {
+	font-size: 13px;
+	color: #8c8c8c;
+}
+.profile .value {
+	width: 60%;
+}
+.profile td {
+	padding: 5px;
+	border-top: 1px solid #E9E9E9;
+	vertical-align: middle;
+}
+.profile tr:first-child td {
+	border-top: none;
+}
+.profile table input {
+	width: 98%;
+	height: 20px;
+	font-size: 14px;
+}
+.profile .submit {
+	margin-top: 20px;
+	text-align: center;
+}
+.profile .submit .btn {
+	width: 90px;
+	height: 35px;
+	font-size: 14px;
+}
+
+.pics .hl {
+	margin: 10px 0 10px 0;
+	padding-top: 5px;
+	border-top: 1px solid #E9E9E9;
+}
+.pics .upload {
+	text-align: center;
+}
+.pics .upload .btn {
+	width: 100px;
+}
+.pics .row {
+	overflow: auto;
+}
+.pics .pic {
+	width: 150px;
+	background: #ffffff;
+	box-shadow: #cccccc 0px 0px 7px;
+	padding: 8px;
+	margin: 10px;
+	float: left;
+	position: relative;
+}
+.pics .pic .del {
+	position: absolute;
+	right: 15px;
+	top: 10px;
+	font-size: 18px;
+}
+.pics .pic .del a {
+	color: #ff0000;
+	text-decoration: none;
+	text-shadow: 0px 0px 2px #ffffff;
+}
