@@ -45,6 +45,15 @@ function createId($digits) {
 	return $id;
 }
 
+// redirects users who are not logged in to login page
+function kickGuests() {
+	global $_user;
+	
+	if (!$_user->data['is_registered']) {
+		redirectTo("login.php");
+	}
+}
+
 
 // get config
 require("./include/config.inc.php");
@@ -65,8 +74,6 @@ $user->setup();
 
 // rename variables and close database connection so it doesn't interfere with other stuff
 $_user = $user;
-$db->sql_close();
-unset($user, $db);
 
 // get db config from phpbb config file in local scope
 $getConfig = function() {
@@ -91,6 +98,10 @@ $comps = array("templates", "database");
 foreach ($comps as $comp) {
 	loadComponent($comp);
 }
+
 $_db = new database;
+
+// assign user info for templates
+$_tpl->assign("_user", $_user->data);
 
 ?>

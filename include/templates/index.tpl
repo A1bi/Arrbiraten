@@ -6,7 +6,7 @@
 	</div>
 	<div class="box" style="float: right;">
 		{if $smarty.cookies.update < $_config.update}<div class="update">Update!</div>{/if}
-		<a href="?page=profile" class="hl">zu deinem Steckbrief</a>
+		<a href="/profile" class="hl">zu deinem Steckbrief</a>
 		Hier kannst du deinen eigenen Steckbrief für die Abizeitung ausfüllen.
 	</div>
 </div>

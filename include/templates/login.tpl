@@ -1,5 +1,5 @@
 {include file="head.tpl"}
-<form action="/" method="post">
+<form action="/login" method="post">
 <div class="box login">
 	<div class="alert{if $msg != ""} msg{/if}">{$msg|default:"Bitte logge dich mit deinem Account aus dem Forum ein!"}</div>
 	<table>
