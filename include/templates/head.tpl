@@ -10,8 +10,8 @@
 <body>
 	<a href="/" class="headline">Arr Biraten 2012{if $title != ""} - {$title}{/if}</a>
 	<div class="content">
-		{if $_user.user_id != ""}
+		{if $_user.is_registered}
 		<div class="userinfo">
-			eingeloggt als {$_user.user_name|escape} | <a href="/forum/ucp.php?mode=logout&amp;sid={$_user.session_id}">ausloggen</a>
+			eingeloggt als {$_user.username|escape} | <a href="/forum/ucp.php?mode=logout&amp;sid={$_user.session_id}">ausloggen</a>
 		</div>
 		{/if}
