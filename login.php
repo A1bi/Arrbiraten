@@ -9,7 +9,7 @@ if ($_POST['login']) {
 
 	if ($result['status'] == LOGIN_SUCCESS)
 	{
-		redirectTo("index.php");
+		redirectTo("/");
 	}
 	else
 	{

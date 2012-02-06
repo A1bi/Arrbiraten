@@ -2,41 +2,10 @@
 include('include/main.php');
 kickGuests();
 
-// uploaded photos ?
-if ($_POST['upload']) {
+loadComponent("pics");
+$pics = new pics("profile_pics");
 
-	loadComponent("resize");
-	$resize = new resize;
-
-	$id = createId(6);
-	$filename = $_base."gfx/cache/pics/full/".$id.".jpg";
-
-	if (move_uploaded_file($_FILES['file']['tmp_name'], $filename)) {
-		chmod($filename, 0777);
-
-		$_db->query('INSERT INTO profile_pics VALUES (null, ?, ?, ?)', array($id, $_user->data['user_id'], time()));
-		$resize->resizepic($id, "pics", "medium");
-	}
-
-	redirectTo();
-}
-
-// deleted photo ?
-if ($_GET['action'] == "del") {
-	$result = $_db->query('SELECT id, pic FROM profile_pics WHERE id = ? AND user = ?', array($_GET['id'], $_user->data['user_id']));
-	$row = $_db->fetchAssoc($result);
-
-	// correct id ?
-	if (!empty($row['pic'])) {
-		$_db->query('DELETE FROM profile_pics WHERE id = ?', array($row['id']));
-
-		loadComponent("resize");
-		$resize = new resize;
-		$resize->del_pic("pics", "medium", $row['pic']);
-	}
-
-	redirectTo("?page=profile");
-}
+$pics->handleActions();
 
 // prepare all fields
 $fields = array(
@@ -96,12 +65,8 @@ if ($_POST['save']) {
 
 setcookie("update", $_config['update'], time()+31536000, "/");
 
-// fetch pics
-$result = $_db->query('SELECT id, pic FROM profile_pics WHERE user = ?', array($_user->data['user_id']));
-$pics = $_db->fetchAll($result);
-
 $_tpl->assign("fields", $fields);
-$_tpl->assign("pics", $pics);
+$_tpl->assign("pics", $pics->getAll());
 $_tpl->display("profile.tpl");
 
 ?>
