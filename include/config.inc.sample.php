@@ -6,7 +6,9 @@ $_config = array(
 	"as_site" => 0,
 	
 	// is this a development copy?
-	"dev" => false
+	"dev" => false,
+	
+	"aboutForum" => 0
 
 );
 ?>
