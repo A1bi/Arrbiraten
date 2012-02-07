@@ -22,7 +22,7 @@
 	</div>
 </div>
 </form>
-<form action="/pics" method="post" enctype="multipart/form-data">
+<form action="/profile" method="post" enctype="multipart/form-data">
 <div class="section pics">
 	<div>
 		Hier kannst du Fotos hochladen, die unter deinem Steckbrief abgedruckt werden sollen. Besonders erwünscht sind dabei auch Kinderfotos ;)
