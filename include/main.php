@@ -50,7 +50,7 @@ function kickGuests() {
 	global $_user;
 	
 	if (!$_user->data['is_registered']) {
-		redirectTo("login.php");
+		redirectTo("/login");
 	}
 }
 

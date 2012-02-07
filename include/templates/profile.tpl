@@ -2,7 +2,7 @@
 <form action="/profile" method="post">
 <div class="section">
 	<div>
-		Hier kannst du deinen persönlichen Steckbrief für die Abizeitung ausfüllen. Du kannst ihn auch später noch bis zum <b>8. Februar 2012</b> beliebig oft ändern.
+		Hier kannst du deinen persönlichen Steckbrief für die Abizeitung ausfüllen. Du kannst ihn auch später noch bis zum <b>19. Februar 2012</b> beliebig oft ändern.
 	</div>
 	<div class="box">
 		<table>
