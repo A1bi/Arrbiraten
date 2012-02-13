@@ -1,7 +1,7 @@
 $(function () {
-	$("form").submit(function () {
-		if ($(":file", this).length) {
-			var submit = $(":submit", this);
+	$(":submit").click(function () {
+		var submit = $(this);
+		if (submit.parents("form").find(":file").length) {
 			var newSubmit = submit.clone().val("bitte warten...").attr("disabled", "disabled");
 			submit.hide().after(newSubmit);
 		}
