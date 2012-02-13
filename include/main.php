@@ -36,12 +36,27 @@ function loadComponent($component) {
  * @param int $digits
  * @return string
  */
-function createId($digits) {
+function createId($digits, $table = "", $column = "") {
+	global $_db;
 	$items = "abcdefghijkmnpqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY";
-	for ($i = 0; $i < $digits; $i++) {
-		$item = mt_rand(1, strlen($items));
-		$id .= $items{$item};
+	
+	while (true) {
+		$id = "";
+		for ($i = 0; $i < $digits; $i++) {
+			$item = mt_rand(1, strlen($items));
+			$id .= $items{$item};
+		}
+		
+		if (!empty($table)) {
+			$row = $_db->query('SELECT '.$column.' FROM '.$table.' WHERE '.$column.' = ?', array($id))->fetch();
+			if (empty($row[$column])) {
+				break;
+			}
+		} else {
+			break;
+		}
 	}
+	
 	return $id;
 }
 

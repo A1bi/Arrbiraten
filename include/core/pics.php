@@ -25,7 +25,7 @@ class pics {
 			loadComponent("resize");
 			$resize = new resize;
 
-			$id = createId(6);
+			$id = createId(6, "pics", "pic");
 			$filename = $_base."gfx/cache/pics/full/".$id.".jpg";
 
 			if (move_uploaded_file($_FILES['file']['tmp_name'], $filename)) {
