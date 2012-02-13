@@ -16,6 +16,10 @@
 			<a href="/pics" class="hl">Fotos für Collagen</a>
 			Lade deine Fotos für die Collagen in der Abizeitung hoch.
 		</div>
+		<div class="box" style="float: right;">
+			<a href="/stories" class="hl">Kursberichte</a>
+			Hier kannst du Kursberichte und die dazugehörigen Kursfotos hochladen.
+		</div>
 	</div>
 </div>
 {include file="foot.tpl"}

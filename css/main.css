@@ -25,6 +25,9 @@ table {
 	width: 60px;
 	height: 27px;
 }
+.hcen {
+	text-align: center;
+}
 
 /* --- main layout elements --- */
 .headline {
@@ -161,6 +164,12 @@ table {
 .section {
 	margin-top: 30px;
 }
+.section .hl {
+	font-size: 14px;
+	border-bottom: 1px solid #E9E9E9;
+	padding-bottom: 3px;
+	margin: 0 10px 5px 10px;
+}
 .section .box {
 	margin: auto;
 	margin-top: 20px;
@@ -200,15 +209,11 @@ table {
 	font-size: 14px;
 }
 
+/* --- pics --- */
 .pics .hl {
-	margin: 10px 0 10px 0;
-	padding-top: 5px;
-	border-top: 1px solid #E9E9E9;
+	margin: 10px;	
 }
-.pics .upload {
-	text-align: center;
-}
-.pics .upload .btn {
+.pics .btn {
 	width: 100px;
 }
 .pics .row {
@@ -233,4 +238,39 @@ table {
 	color: #ff0000;
 	text-decoration: none;
 	text-shadow: 0px 0px 2px #ffffff;
+}
+
+/* --- stories --- */
+.newStory td input {
+	width: 250px;
+}
+.newStory .btn {
+	width: 160px !important;
+}
+.story .top {
+	overflow: auto;
+}
+.story .subject {
+	font-weight: bold;
+	float: left;
+}
+.story .filename {
+	float: right;
+	color: #8c8c8c;
+	font-size: 13px;
+}
+.story .actions {
+	text-align: center;
+	font-size: 13px;
+	cursor: pointer;
+}
+.story .actions span {
+	text-decoration: underline;
+}
+.story .actions span:hover {
+	text-decoration: none;
+}
+.story .pics, .story .reupload {
+	margin-top: 15px;
+	display: none;
 }
