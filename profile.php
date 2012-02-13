@@ -3,9 +3,9 @@ include('include/main.php');
 kickGuests();
 
 loadComponent("pics");
-$pics = new pics("profile", "profile_pics");
+$pics = new pics(1);
 
-$pics->handleActions();
+$pics->handleActions("profile");
 
 // prepare all fields
 $fields = array(

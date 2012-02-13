@@ -26,6 +26,7 @@
 <div class="section pics">
 	<div>
 		Hier kannst du Fotos hochladen, die unter deinem Steckbrief abgedruckt werden sollen. Besonders erwünscht sind dabei auch Kinderfotos ;)
+		<br /><b>Zwei bis vier</b> Fotos sollten okay sein.
 	</div>
 	{include file="pics_upload.tpl"}
 </div>
