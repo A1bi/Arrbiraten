@@ -1,2 +1,6 @@
 RewriteEngine on
 RewriteRule ^([a-z]+)$ $1.php [QSA]
+
+php_value max_execution_time 400
+php_value upload_max_filesize 100M
+php_value post_max_size 100M
