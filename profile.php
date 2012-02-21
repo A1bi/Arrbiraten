@@ -28,7 +28,7 @@ $fields = array(
 		"caption" => "Flagschiffe", "real" => "LKs", "value" => ""
 	),
 	"goals" => array(
-		"caption" => "Schatzinsel", "real" => "Lebensziele", "value" => ""
+		"caption" => "Nehme Kurs auf", "real" => "Lebensziele", "value" => ""
 	),
 	"hobbies" => array(
 		"caption" => "Rum und...", "real" => "Hobbys", "value" => ""
@@ -37,7 +37,7 @@ $fields = array(
 		"caption" => "", "real" => "Top", "value" => ""
 	),
 	"flop" => array(
-		"caption" => "", "real" => "Flop", "value" => ""
+		"caption" => "Hoher Wellengang", "real" => "Flop", "value" => ""
 	),
 	"saying" => array(
 		"caption" => "Seemannsgarn", "real" => "Spruch, Motto", "value" => ""

@@ -18,12 +18,25 @@ if ($_POST['create']) {
 } else if (!empty($_REQUEST['story'])) {
 	$story = $_db->query('SELECT id, file FROM stories WHERE id = ? AND user = ?', array($_REQUEST['story'], $_user->data['user_id']))->fetch();
 	if (!empty($story['id'])) {
-	
+		
+		$filename = $_base."media/".$story['file'];
 		if (!empty($_FILES['newFile']['name'])) {
-			$filename = $_base."media/".$story['file'];
 			if (move_uploaded_file($_FILES['newFile']['tmp_name'], $filename)) {
 				$_db->query('UPDATE stories SET filename = ? WHERE id = ?', array($_FILES['newFile']['name'], $story['id']));
 			}
+
+		} elseif ($_GET['action'] == "del") {
+		    // delete all pics associated with this story
+		    $allPics = $pics->getAll($story['id']);
+		    foreach ($allPics as $pic) {
+				$pics->del($pic['id'], $story['id']);
+		    }
+		    
+		    // delete document
+		    unlink($filename);
+		    
+			$_db->query('DELETE FROM stories WHERE id = ?', array($story['id']));
+		    
 		} else {
 			$pics->handleActions("stories", $story['id']);
 		}

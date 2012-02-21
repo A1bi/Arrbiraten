@@ -30,6 +30,7 @@
 	<div class="hl">
 		Deine hochgeladenen Berichte
 	</div>
+	{if $stories|@count < 1}noch keine Berichte hochgeladen{else}
 	{foreach $stories as $story}
 	<form action="/stories" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="story" value="{$story.id}" />
@@ -39,7 +40,7 @@
 			<div class="filename">{$story.filename|escape}</div>
 		</div>
 		<div class="actions">
-			<span class="s_pics">Kursfotos anzeigen/hochladen</span> - <span class="s_reupload">Bericht neu hochladen</span>
+			<span class="s_pics">Kursfotos anzeigen/hochladen</span> - <span class="s_reupload">Bericht neu hochladen</span> - <a href="?action=del&amp;story={$story.id}" onclick="return confirm('Bericht wirklich löschen?');">Bericht löschen</a>
 		</div>
 		<div class="reupload newStory">
 			<div class="hl">
@@ -56,5 +57,6 @@
 	</div>
 	</form>
 	{/foreach}
+	{/if}
 </div>
 {include file="foot.tpl"}
