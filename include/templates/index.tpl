@@ -6,7 +6,7 @@
 			Alles Organisatorische, u.A. Rubriken für die Abizeitung.
 		</div>
 		<div class="box" style="float: right;">
-			{if $smarty.cookies.update < $_config.update}<div class="update">Update!</div>{/if}
+			{if $smarty.cookies.update < $_vars.update}<div class="update">Update!</div>{/if}
 			<a href="/profile" class="hl">Steckbrief</a>
 			Hier kannst du deinen eigenen Steckbrief für die Abizeitung ausfüllen.
 		</div>

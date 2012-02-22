@@ -63,7 +63,7 @@ if ($_POST['save']) {
 	redirectTo();
 }
 
-setcookie("update", $_config['update'], time()+31536000, "/");
+setcookie("update", $_vars['update'], time()+31536000, "/");
 
 $_tpl->assign("fields", $fields);
 $_tpl->assign("pics", $pics->getAll());

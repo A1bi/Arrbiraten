@@ -2,7 +2,7 @@
 include('include/main.php');
 
 // kick normal users
-if ($_user->data['user_id'] != 2) redirect("/");
+if (!$_vars['admin']) redirect("/");
 
 // someone linked ?
 if (!empty($_GET['user'])) {

@@ -105,8 +105,9 @@ $getConfig = function() {
 $getConfig();
 unset($getConfig);
 
-
-$_config['update'] = 1;
+$_vars = array();
+$_vars['update'] = 2;
+$_vars['admin'] = ($_user->data['user_id'] == 2);
 
 // components to load
 $comps = array("templates", "database");
