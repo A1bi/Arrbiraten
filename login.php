@@ -5,14 +5,11 @@ if ($_POST['login']) {
 	$username = request_var('name', '', true);
 	$password = request_var('pass', '', true);
 
-	$result = $auth->login($username, $password);
+	$result = $auth->login($username, $password, true);
 
-	if ($result['status'] == LOGIN_SUCCESS)
-	{
+	if ($result['status'] == LOGIN_SUCCESS) {
 		redirectTo("/");
-	}
-	else
-	{
+	} else {
 		$_tpl->assign("msg", "Benutzername oder Passwort falsch.");
 		$_tpl->display("login.tpl");
 	}

@@ -61,8 +61,12 @@ function createId($digits, $table = "", $column = "") {
 }
 
 // redirects users who are not logged in to login page
-function kickGuests() {
-	global $_user;
+function kickGuests($admin = false) {
+	global $_user, $_vars;
+	
+	if ($admin && !$_vars['admin']) {
+		redirectTo("/");
+	}
 	
 	if (!$_user->data['is_registered']) {
 		redirectTo("/login");

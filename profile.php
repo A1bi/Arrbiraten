@@ -2,10 +2,16 @@
 include('include/main.php');
 kickGuests();
 
+if ($_vars['admin'] && !empty($_GET['user'])) {
+	$user = $_GET['user'];
+} else {
+	$user = $_user->data['user_id'];
+}
+
 loadComponent("pics");
 $pics = new pics(1);
 
-$pics->handleActions("profile");
+$pics->handleActions("profile", $user);
 
 // prepare all fields
 $fields = array(
@@ -48,12 +54,12 @@ $fields = array(
 );
 
 foreach ($fields as $key => $field) {
-	$result = $_db->query('SELECT id, value FROM profile_fields WHERE field = ? AND user = ?', array($key, $_user->data['user_id']));
+	$result = $_db->query('SELECT id, value FROM profile_fields WHERE field = ? AND user = ?', array($key, $user));
 	$row = $_db->fetchAssoc($result);
 	$fields[$key]['value'] = $row['value'];
 
 	if (empty($row['id'])) {
-		$_db->query('INSERT INTO profile_fields VALUES (null, ?, ?, "", 0)', array($key, $_user->data['user_id']));
+		$_db->query('INSERT INTO profile_fields VALUES (null, ?, ?, "", 0)', array($key, $user));
 	} else if ($_POST['save'] && $_POST[$key] != $row['value']) {
 		$_db->query('UPDATE profile_fields SET value = ?, lastchange = ? WHERE id = ?', array($_POST[$key], time(), $row['id']));
 	}
@@ -66,7 +72,7 @@ if ($_POST['save']) {
 setcookie("update", $_vars['update'], time()+31536000, "/");
 
 $_tpl->assign("fields", $fields);
-$_tpl->assign("pics", $pics->getAll());
+$_tpl->assign("pics", $pics->getAll($user));
 $_tpl->display("profile.tpl");
 
 ?>

@@ -274,3 +274,8 @@ table {
 	margin-top: 15px;
 	display: none;
 }
+
+/* --- people --- */
+table .name {
+	width: 60%;
+}
