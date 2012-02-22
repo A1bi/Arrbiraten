@@ -16,7 +16,13 @@ if ($_POST['create']) {
 	}
 
 } else if (!empty($_REQUEST['story'])) {
-	$story = $_db->query('SELECT id, file FROM stories WHERE id = ? AND user = ?', array($_REQUEST['story'], $_user->data['user_id']))->fetch();
+	if ($_vars['admin']) {
+		$result = $_db->query('SELECT id, file FROM stories WHERE id = ?', array($_REQUEST['story']));
+	} else {
+		$result = $_db->query('SELECT id, file FROM stories WHERE id = ? AND user = ?', array($_REQUEST['story'], $_user->data['user_id']));
+	}
+	$story = $result->fetch();
+	
 	if (!empty($story['id'])) {
 		
 		$filename = $_base."media/".$story['file'];
@@ -46,7 +52,11 @@ if ($_POST['create']) {
 	redirectTo("/stories");
 }
 
-$result = $_db->query('SELECT * FROM stories WHERE user = ? ORDER BY id DESC', array($_user->data['user_id']));
+if ($_vars['admin']) {
+	$result = $_db->query('SELECT * FROM stories ORDER BY id DESC');
+} else {
+	$result = $_db->query('SELECT * FROM stories WHERE user = ? ORDER BY id DESC', array($_user->data['user_id']));
+}
 $stories = array();
 while ($story = $result->fetch()) {
 	$story['pics'] = $pics->getAll($story['id']);
