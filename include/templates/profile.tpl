@@ -1,5 +1,5 @@
 {include file="head.tpl" title="Dein Steckbrief"}
-<form action="/profile" method="post">
+<form action="/profile?user={$smarty.get.user|escape}" method="post">
 <div class="section">
 	<div class="hl">
 		Hier kannst du deinen persönlichen Steckbrief für die Abizeitung ausfüllen.
