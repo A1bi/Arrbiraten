@@ -14,10 +14,10 @@ class pics {
 	}
 	
 	
-	function getAll($owner = "") {
+	function getAll($owner = -1) {
 		global $_db, $_user;
 		
-		if (!isset($owner)) $owner = $_user->data['user_id'];
+		if ($owner < 0) $owner = $_user->data['user_id'];
 		
 		// fetch pics
 		$result = $_db->query('SELECT id, pic FROM pics WHERE owner = ? AND type = ?', array($owner, $this->type));
