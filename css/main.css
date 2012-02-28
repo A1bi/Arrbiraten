@@ -4,7 +4,7 @@ body {
 	margin: auto;
 	margin-top: 50px;
 	position: relative;
-	width: 70%;
+	width: 730px;
 }
 img {
 	border: none;
@@ -208,6 +208,12 @@ table {
 	height: 35px;
 	font-size: 14px;
 }
+.section .profilepic {
+	text-align: center;
+}
+.section .profilepic img {
+	border-radius: 10px;
+}
 
 /* --- pics --- */
 .pics .hl {
@@ -272,6 +278,8 @@ table {
 }
 .story .pics, .story .reupload {
 	margin-top: 15px;
+}
+.story .reupload {
 	display: none;
 }
 

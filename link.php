@@ -4,11 +4,27 @@ include('include/main.php');
 // kick normal users
 kickGuests(true);
 
+loadComponent("pics");
+$pics = new pics(4, "profile");
+
 // someone linked ?
 if (!empty($_GET['user'])) {
 	$_db->query('UPDATE people SET user = ? WHERE topic = ?', array($_GET['user'], $_GET['topic']));
 	redirect("/link");
 }
+
+// picture linked ?
+if ($_POST['save']) {
+	foreach ($_POST['user'] as $pic => $user) {
+		if (!$user) continue;
+		
+		$pics->updateOwner($pic, $user);
+		$_db->query('UPDATE people SET pic = 1 WHERE user = ?', array($user));
+	}
+	
+	redirectTo();
+}
+
 
 // get all real names from the required profile field
 $result = $_db->query('	SELECT		pf.pf_realname AS realname,
@@ -29,6 +45,7 @@ while ($name = $result->fetch()) {
 }
 $_tpl->assign("names", $names);
 
+
 // go through forum which contains all threads about the people
 $result = $_db->query('SELECT topic_id AS id, topic_title AS title FROM phpbb_topics WHERE forum_id = ?', array($_config['aboutForum']));
 
@@ -47,8 +64,33 @@ while ($topic = $result->fetch()) {
 	}
 	
 }
-
 $_tpl->assign("missing", $missing);
+
+
+// import profile pictures
+$importDir = $_base."gfx/cache/pics/import/";
+
+if ($handle = opendir($importDir)) {
+	while (false !== ($file = readdir($handle))) {
+		if (substr($file, 0, 1) == ".") continue;
+
+		$pics->importFile($importDir.$file, 0);
+	}
+
+	closedir($handle);
+}
+$allPics = $pics->getAll(0);
+
+// get people without pictures
+if (count($allPics)) {
+	$result = $_db->query('SELECT user, firstname, lastname FROM people WHERE pic = 0 AND user != 0 ORDER BY firstname ASC');
+	$_tpl->assign("names2", $result->fetchAll());
+}
+
+
+// get all profile pictures which are not assigned to anyone
+$_tpl->assign("pics", $allPics);
+
 $_tpl->display("link.tpl");
 
 ?>

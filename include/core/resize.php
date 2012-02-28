@@ -1,6 +1,6 @@
 <?php
 class resize {
-	var $sizes = array("medium" => array("w", 150));
+	var $sizes = array("medium" => array("w", 150), "profile" => array("h", 400));
 	
 	function resizepic($pic,$dir,$size) {
 		global $_base;
@@ -40,14 +40,14 @@ class resize {
 		}
 		$newimage=imagecreatetruecolor($newwidth,$newheight);
 		imagecopyresampled($newimage,$image,0,0,0,0,$newwidth,$newheight,$picinfo[0],$picinfo[1]);
-		imagejpeg($newimage, $_base."gfx/cache/".$dir."/".(($size != "slide") ? $size : "")."/".$pic.".jpg", 100);
+		imagejpeg($newimage, $_base."gfx/cache/".$dir."/medium/".$pic.".jpg", 100);
 		imagedestroy($image);
 		imagedestroy($newimage);
 	}
 	
 	function del_pic($dir,$size,$id) {
 		global $_base;
-		$file=$_base."gfx/cache/".$dir."/".$size."/".$id.".jpg";
+		$file=$_base."gfx/cache/".$dir."/medium/".$id.".jpg";
 		if (file_exists($file)) {
 			@unlink($file);
 		}

@@ -21,5 +21,17 @@
 			Hier kannst du Kursberichte und die dazugehörigen Kursfotos hochladen.
 		</div>
 	</div>
+	{if $_vars.admin}
+	<div>
+		<div class="box">
+			<a href="/people" class="hl">Abiturentia</a>
+			Übersicht über alle Leute mit ihren Steckbriefen
+		</div>
+		<div class="box" style="float: right;">
+			<a href="/link" class="hl">Daten verknüpfen</a>
+			Forenuser mit Leuten und ihren Fotos verknüpfen
+		</div>
+	</div>
+	{/if}
 </div>
 {include file="foot.tpl"}

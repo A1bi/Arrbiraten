@@ -1,12 +1,30 @@
 {include file="head.tpl" title="Dein Steckbrief"}
+{if $user.pic.id != ""}
+<div class="section">
+	<div class="hl">
+		Dein piratiges Profilfoto
+	</div>
+	<div class="box profilepic">
+		<img src="http://arrbiraten.albisigns/gfx/cache/pics/medium/{$user.pic.pic}.jpg" alt="" height="400" />
+	</div>
+</div>
+{/if}
 <form action="/profile?user={$smarty.get.user|escape}" method="post">
 <div class="section">
 	<div class="hl">
 		Hier kannst du deinen persönlichen Steckbrief für die Abizeitung ausfüllen.
-		<br />Du kannst ihn auch später noch bis zum <b>19. Februar 2012</b> beliebig oft ändern.
 	</div>
 	<div class="box">
 		<table>
+			{if $user.firstname != ""}
+			<tr>
+				<td class="caption">
+					Landratte:
+					<div>(Name)</div>
+				</td>
+				<td class="value"><input type="text" name="name" value="{$user.firstname} {$user.lastname}" disabled="disabled" /></td>
+			</tr>
+			{/if}
 			{foreach from=$fields item=field key=key}
 			<tr>
 				<td class="caption">

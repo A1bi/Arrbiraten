@@ -15,9 +15,6 @@ $pics->handleActions("profile", $user);
 
 // prepare all fields
 $fields = array(
-	"name" => array(
-		"caption" => "Landratte", "real" => "Name", "value" => ""
-	),
 	"nick" => array(
 		"caption" => "", "real" => "Spitzname", "value" => ""
 	),
@@ -69,10 +66,22 @@ if ($_POST['save']) {
 	redirectTo();
 }
 
+$_tpl->assign("fields", $fields);
+
+// get all normal pics
+$_tpl->assign("pics", $pics->getAll($user));
+
+// user info
+$result = $_db->query('SELECT firstname, lastname FROM people WHERE user = ?', array($user));
+$userInfo = $result->fetch();
+
+// get the main profile picture
+$pics->setType(4);
+$userInfo['pic'] = current($pics->getAll($user));
+$_tpl->assign("user", $userInfo);
+
 setcookie("update", $_vars['update'], time()+31536000, "/");
 
-$_tpl->assign("fields", $fields);
-$_tpl->assign("pics", $pics->getAll($user));
 $_tpl->display("profile.tpl");
 
 ?>
