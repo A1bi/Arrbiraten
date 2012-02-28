@@ -29,7 +29,7 @@
 			<div class="row">
 			{foreach $pics as $pic}
 				<div class="pic">
-					<img src="/gfx/cache/pics/medium/{$pic.pic}.jpg" alt="" width="150" /><br />
+					<a href="/gfx/cache/pics/full/{$pic.pic}.jpg" target="_blank"><img src="/gfx/cache/pics/medium/{$pic.pic}.jpg" alt="" width="150" /></a><br />
 					<select name="user[{$pic.id}]" style="width: 150px;"><option value="0">---</option>{foreach $names2 as $name}<option value="{$name.user}">{$name.firstname} {$name.lastname}</option>{/foreach}</select>
 				</div>
 			{if ($pic@iteration is div by 3)}

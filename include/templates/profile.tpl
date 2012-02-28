@@ -5,7 +5,7 @@
 		Dein piratiges Profilfoto
 	</div>
 	<div class="box profilepic">
-		<img src="http://arrbiraten.albisigns/gfx/cache/pics/medium/{$user.pic.pic}.jpg" alt="" height="400" />
+		<img src="/gfx/cache/pics/medium/{$user.pic.pic}.jpg" alt="" height="400" />
 	</div>
 </div>
 {/if}

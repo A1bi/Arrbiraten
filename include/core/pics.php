@@ -89,8 +89,6 @@ class pics {
 		
 		loadComponent("resize");
 		$resize = new resize;
-		
-		chmod($this->getFilename($id), 0777);
 
 		$_db->query('INSERT INTO pics VALUES (null, ?, ?, ?, ?)', array($this->type, $id, $owner, time()));
 		$resize->resizepic($id, "pics", $this->size);
