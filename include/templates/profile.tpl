@@ -41,14 +41,14 @@
 	</div>
 </div>
 </form>
-<form action="/profile?user={$smarty.get.user|escape}" method="post" enctype="multipart/form-data">
+<form action="/profile?user={$user.id}" method="post" enctype="multipart/form-data">
 <div class="section pics">
 	<div class="hl">
 		Hier kannst du Fotos hochladen, die unter deinem Steckbrief abgedruckt werden sollen. Besonders erwünscht sind dabei auch Kinderfotos ;)
 		<br /><b>Zwei bis vier</b> Fotos sollten okay sein.
 	</div>
 	<div class="box">
-		{include file="pics_upload.tpl"}
+		{include file="pics_upload.tpl" add="&amp;user={$user.id}"}
 	</div>
 </div>
 </form>

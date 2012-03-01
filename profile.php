@@ -11,7 +11,7 @@ if ($_vars['admin'] && !empty($_GET['user'])) {
 loadComponent("pics");
 $pics = new pics(1);
 
-$pics->handleActions("profile", $user);
+$pics->handleActions("profile?user=".$user, $user);
 
 // prepare all fields
 $fields = array(
@@ -74,6 +74,7 @@ $_tpl->assign("pics", $pics->getAll($user));
 // user info
 $result = $_db->query('SELECT firstname, lastname FROM people WHERE user = ?', array($user));
 $userInfo = $result->fetch();
+$userInfo['id'] = $user;
 
 // get the main profile picture
 $pics->setType(4);
