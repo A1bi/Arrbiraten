@@ -40,7 +40,7 @@
 			<div class="filename">{$story.filename|escape}</div>
 		</div>
 		<div class="actions">
-			<span class="s_pics">Kursfotos anzeigen/hochladen</span> - <span class="s_reupload">Bericht neu hochladen</span> - <a href="?action=del&amp;story={$story.id}" onclick="return confirm('Bericht wirklich löschen?');">Bericht löschen</a>
+			<span class="s_pics">Kursfotos anzeigen/hochladen</span> - <span class="s_reupload">Bericht neu hochladen</span> - <a href="?action=del&amp;story={$story.id}" onclick="return confirm('Bericht wirklich löschen?');">Bericht löschen</a>{if $_vars.admin} - <a href="/download?action=story&amp;id={$story.id}">Download</a> ({if $story.downloaded < 1}-{elseif $story.updated > $story.downloaded}!!!{else}ok{/if}){/if}
 		</div>
 		<div class="reupload newStory">
 			<div class="hl">

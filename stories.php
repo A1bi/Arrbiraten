@@ -10,7 +10,7 @@ if ($_POST['create']) {
 	$id = createId(6, "stories", "file");
 	$filename = $_base."media/".$id;
 	if (move_uploaded_file($_FILES['file']['tmp_name'], $filename)) {
-		$_db->query('INSERT INTO stories VALUES (null, ?, ?, ?, ?, ?, ?)', array($_POST['subject'], $_POST['teacher'], $id, $_FILES['file']['name'], $_user->data['user_id'], time()));
+		$_db->query('INSERT INTO stories VALUES (null, ?, ?, ?, ?, ?, ?, 0)', array($_POST['subject'], $_POST['teacher'], $id, $_FILES['file']['name'], $_user->data['user_id'], time()));
 		
 		redirectTo();
 	}
@@ -28,7 +28,7 @@ if ($_POST['create']) {
 		$filename = $_base."media/".$story['file'];
 		if (!empty($_FILES['newFile']['name'])) {
 			if (move_uploaded_file($_FILES['newFile']['tmp_name'], $filename)) {
-				$_db->query('UPDATE stories SET filename = ? WHERE id = ?', array($_FILES['newFile']['name'], $story['id']));
+				$_db->query('UPDATE stories SET filename = ?, updated = ? WHERE id = ?', array($_FILES['newFile']['name'], time(), $story['id']));
 			}
 
 		} elseif ($_GET['action'] == "del") {
