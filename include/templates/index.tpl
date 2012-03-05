@@ -1,6 +1,6 @@
 {include file="head.tpl"}
 <div class="navigation">
-	<div>
+	<div class="row">
 		<div class="box">
 			<a href="/forum" class="hl">Forum</a>
 			Alles Organisatorische, u.A. Rubriken für die Abizeitung.
@@ -11,7 +11,7 @@
 			Hier kannst du deinen eigenen Steckbrief für die Abizeitung ausfüllen.
 		</div>
 	</div>
-	<div>
+	<div class="row">
 		<div class="box">
 			<a href="/pics" class="hl">Fotos für Collagen</a>
 			Lade deine Fotos für die Collagen in der Abizeitung hoch.
@@ -21,8 +21,14 @@
 			Hier kannst du Kursberichte und die dazugehörigen Kursfotos hochladen.
 		</div>
 	</div>
+	<div class="row">
+		<div class="box">
+			<a href="/shirts" class="hl">Abi-Shirt bestellen</a>
+			Bestelle hier dein Abi-Shirt.
+		</div>
+	</div>
 	{if $_vars.admin}
-	<div>
+	<div class="row">
 		<div class="box">
 			<a href="/people" class="hl">Abiturentia</a>
 			Übersicht über alle Leute mit ihren Steckbriefen
