@@ -25,35 +25,47 @@ if ($_POST['create']) {
 	
 	if (!empty($story['id'])) {
 		
-		$filename = $_base."media/".$story['file'];
-		if (!empty($_FILES['newFile']['name'])) {
-			if (move_uploaded_file($_FILES['newFile']['tmp_name'], $filename)) {
-				$_db->query('UPDATE stories SET filename = ?, updated = ? WHERE id = ?', array($_FILES['newFile']['name'], time(), $story['id']));
-			}
-
-		} elseif ($_GET['action'] == "del") {
-		    // delete all pics associated with this story
-		    $allPics = $pics->getAll($story['id']);
-		    foreach ($allPics as $pic) {
-				$pics->del($pic['id'], $story['id']);
-		    }
-		    
-		    // delete document
-		    unlink($filename);
-		    
-			$_db->query('DELETE FROM stories WHERE id = ?', array($story['id']));
-		    
+		if ($_GET['action'] == "resetDownloaded" && $_vars['admin']) {
+			$_db->query('UPDATE stories SET downloaded = 0 WHERE id = ?', array($story['id']));
+			
 		} else {
-			$pics->handleActions("stories", $story['id']);
-		}
 		
+			$filename = $_base."media/".$story['file'];
+			if (!empty($_FILES['newFile']['name'])) {
+				if (move_uploaded_file($_FILES['newFile']['tmp_name'], $filename)) {
+					$_db->query('UPDATE stories SET filename = ?, updated = ? WHERE id = ?', array($_FILES['newFile']['name'], time(), $story['id']));
+				}
+
+			} elseif ($_GET['action'] == "del") {
+				// delete all pics associated with this story
+				$allPics = $pics->getAll($story['id']);
+				foreach ($allPics as $pic) {
+					$pics->del($pic['id'], $story['id']);
+				}
+
+				// delete document
+				unlink($filename);
+
+				$_db->query('DELETE FROM stories WHERE id = ?', array($story['id']));
+
+			} else {
+				$pics->handleActions("stories", $story['id']);
+			}
+		
+		}	
 	}
 	
 	redirectTo("/stories");
 }
 
 if ($_vars['admin']) {
-	$result = $_db->query('SELECT * FROM stories ORDER BY id DESC');
+	$result = $_db->query('	SELECT		s.*,
+										p.*
+							FROM		stories AS s,
+										people AS p
+							WHERE		s.user = p.user
+							ORDER BY	id DESC
+							');
 } else {
 	$result = $_db->query('SELECT * FROM stories WHERE user = ? ORDER BY id DESC', array($_user->data['user_id']));
 }

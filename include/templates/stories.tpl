@@ -37,10 +37,10 @@
 	<div class="box story">
 		<div class="top">
 			<div class="subject">{$story.subject|escape} {$story.teacher|escape}</div>
-			<div class="filename">{$story.filename|escape}</div>
+			<div class="filename">{$story.filename|escape}{if $_vars.admin} - von {$story.firstname} {$story.lastname}{/if}</div>
 		</div>
 		<div class="actions">
-			<span class="s_pics">Kursfotos anzeigen/hochladen</span> - <span class="s_reupload">Bericht neu hochladen</span> - <a href="?action=del&amp;story={$story.id}" onclick="return confirm('Bericht wirklich löschen?');">Bericht löschen</a>{if $_vars.admin} - <a href="/download?action=story&amp;id={$story.id}">Download</a> ({if $story.downloaded < 1}-{elseif $story.updated > $story.downloaded}!!!{else}ok{/if}){/if}
+			<span class="s_pics">Kursfotos anzeigen/hochladen</span> - <span class="s_reupload">Bericht neu hochladen</span> - <a href="?action=del&amp;story={$story.id}" onclick="return confirm('Bericht wirklich löschen?');">Bericht löschen</a>{if $_vars.admin} - <a href="/download?action=story&amp;id={$story.id}">Download</a> ({if $story.downloaded < 1}-{elseif $story.updated > $story.downloaded}!!!{else}ok{/if}) <a href="?action=resetDownloaded&amp;story={$story.id}">R</a>{/if}
 		</div>
 		<div class="reupload newStory">
 			<div class="hl">
