@@ -55,7 +55,7 @@
 			<tr>
 				<td>{$gender}</td>
 				{foreach $sizes as $size}
-				<td class="hcen">{$orders.$gender@key.$size@key|default:0}</td>
+				<td class="hcen">{$orders[$gender@key][$size@key]|default:0}</td>
 				{/foreach}
 			</tr>
 			{/foreach}
