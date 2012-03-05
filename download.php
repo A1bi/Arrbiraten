@@ -17,7 +17,7 @@ switch ($_GET['action']) {
 			// create zip file
 			$zipFile = "/media/".$story['id'].".zip";
 			$zip->open($_base.$zipFile, ZIPARCHIVE::OVERWRITE);
-			$root = "Kursbericht - ".$story['subject']." ".$story['teacher'];
+			$root = $story['subject']." ".$story['teacher'];
 			$zip->addEmptyDir($root);
 			
 			// add story document

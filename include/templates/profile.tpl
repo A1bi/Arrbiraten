@@ -36,9 +36,15 @@
 			{/foreach}
 		</table>
 	</div>
+	{if $_vars.blocked.$type}
+	<div class="section hcen">
+		<b>Keine Änderungen mehr möglich!</b>
+	</div>
+	{else}
 	<div class="submit">
 		<input type="submit" name="save" value="speichern" class="btn" />
 	</div>
+	{/if}
 </div>
 </form>
 <form action="/profile?user={$user.id}" method="post" enctype="multipart/form-data">

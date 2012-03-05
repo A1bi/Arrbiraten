@@ -24,6 +24,14 @@ class pics {
 		return $_db->fetchAll($result);
 	}
 	
+	protected function checkIfBlocked() {
+		global $_vars;
+		
+		if ($_vars['blocked'][$this->type]) {
+			redirectTo("/");
+		}
+	}
+	
 	function handleActions($uri, $owner = "") {
 		global $_user;
 		
@@ -31,12 +39,14 @@ class pics {
 		
 		// uploaded photos ?
 		if ($_POST['upload']) {
+			$this->checkIfBlocked();
 			$this->importUpload($_FILES['file'], $owner);
 			redirectTo();
 		}
 
 		// deleted photo ?
 		if ($_GET['action'] == "delPic") {
+			$this->checkIfBlocked();
 			$this->del($_GET['id'], $owner);
 			redirectTo("/".$uri);
 		}

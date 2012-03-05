@@ -2,6 +2,9 @@
 include('include/main.php');
 kickGuests();
 
+$type = 1;
+$_tpl->assign("type", $type);
+
 if ($_vars['admin'] && !empty($_GET['user'])) {
 	$user = $_GET['user'];
 } else {
@@ -9,7 +12,7 @@ if ($_vars['admin'] && !empty($_GET['user'])) {
 }
 
 loadComponent("pics");
-$pics = new pics(1);
+$pics = new pics($type);
 
 $pics->handleActions("profile?user=".$user, $user);
 
@@ -57,7 +60,7 @@ foreach ($fields as $key => $field) {
 
 	if (empty($row['id'])) {
 		$_db->query('INSERT INTO profile_fields VALUES (null, ?, ?, "", 0)', array($key, $user));
-	} else if ($_POST['save'] && $_POST[$key] != $row['value']) {
+	} else if ($_POST['save'] && $_POST[$key] != $row['value'] && !$_vars['blocked'][$type]) {
 		$_db->query('UPDATE profile_fields SET value = ?, lastchange = ? WHERE id = ?', array($_POST[$key], time(), $row['id']));
 	}
 }

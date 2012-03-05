@@ -113,6 +113,12 @@ $_vars = array();
 $_vars['update'] = 2;
 $_vars['admin'] = ($_user->data['user_id'] == 2);
 
+// unblock everything if admin
+$_vars['blocked'] = array();
+foreach ($_config['blocked'] as $key => $blocked) {
+	$_vars['blocked'][$key] = ($_vars['admin']) ? false : $blocked;
+}
+
 // components to load
 $comps = array("templates", "database");
 foreach ($comps as $comp) {

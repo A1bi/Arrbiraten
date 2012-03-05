@@ -2,8 +2,11 @@
 include('include/main.php');
 kickGuests();
 
+$type = 2;
+$_tpl->assign("type", $type);
+
 loadComponent("pics");
-$pics = new pics(2);
+$pics = new pics($type);
 
 $pics->handleActions("pics");
 
