@@ -5,13 +5,13 @@ kickGuests(true);
 loadComponent("pics");
 $pics = new pics(0);
 
-$zip = new ZipArchive();
-
 switch ($_GET['action']) {
 	
 	case "story":
 		$result = $_db->query('SELECT id, file, filename, subject, teacher FROM stories WHERE id = ?', array($_GET['id']));
 		$story = $result->fetch();
+		
+		$zip = new ZipArchive();
 		
 		if (!empty($story['id'])) {
 			// create zip file
@@ -48,15 +48,18 @@ switch ($_GET['action']) {
 		break;
 		
 	case "profiles":
-		// create zip file
-		$zipFile = "/media/profiles.zip";
-		$zip->open($_base.$zipFile, ZIPARCHIVE::OVERWRITE);
-		
-		$root = "Steckbriefe";
-		$zip->addEmptyDir($root);
-		
-		$photos = $root."/pics";
-		$zip->addEmptyDir($photos);
+		if ($_GET['pics']) {
+			// create zip file
+			$zip = new ZipArchive();
+			$zipFile = "/media/profiles.zip";
+			$zip->open($_base.$zipFile, ZIPARCHIVE::OVERWRITE);
+
+			$root = "Steckbriefe";
+			$zip->addEmptyDir($root);
+
+			$photos = $root."/pics";
+			$zip->addEmptyDir($photos);
+		}
 			
 		$xml = new SimpleXMLElement("<people />");
 		
@@ -72,7 +75,9 @@ switch ($_GET['action']) {
 			$result2 = $_db->query('SELECT type, pic FROM pics WHERE (type = 1 OR type = 4) AND owner = ? ORDER BY type DESC', array($person['user']));
 			while ($pic = $result2->fetch()) {
 				$picsXML->addChild("pic", $pic['pic']);
-				$zip->addFile($_base."gfx/cache/pics/full/".$pic['pic'].".jpg", $photos."/".$pic['pic'].".jpg");
+				if ($_GET['pics']) {
+					$zip->addFile($_base."gfx/cache/pics/full/".$pic['pic'].".jpg", $photos."/".$pic['pic'].".jpg");
+				}
 			}
 			
 			// add profile fields
@@ -100,13 +105,13 @@ switch ($_GET['action']) {
 					"caption" => "Rum und..."
 				),
 				"top" => array(
-					"caption" => "Top"
+					"caption" => "Günstiger Wind"
 				),
 				"flop" => array(
-					"caption" => "Hoher Wellengang"
+					"caption" => "Flaute"
 				),
 				"saying" => array(
-					"caption" => "Seemannsgarn"
+					"caption" => "Piratenweisheit"
 				),
 				"greetings" => array(
 					"caption" => "Flaschenpost"
@@ -117,25 +122,39 @@ switch ($_GET['action']) {
 			foreach ($fields as $field => $info) {
 				$profile .= $info['caption'].":\t".$values[$field]['value']."\r";
 			}
-			$personXML->addChild("profile", $profile);
+			$personXML->profile = $profile;
 			
 			// add about
 			$about = "";
-			$result2 = $_db->query('SELECT post_text AS text FROM phpbb_posts WHERE topic_id = ?', array($person['topic']));
+			$result2 = $_db->query('SELECT post_text AS text FROM phpbb_posts WHERE topic_id = ? ORDER BY post_id ASC LIMIT 1, 999', array($person['topic']));
 			while ($post = $result2->fetch()) {
-				$about .= nl2br($post['text'])."\r";
+				$text = nl2br($post['text']);
+				// remove double paragraphs
+				$text = preg_replace("#\r( *)\r#isU", "\r", $text);
+				// remove closing paragraph
+				$text = preg_replace("#(\\r+)( *)$#isU", "", $text);
+				// remove phpbb shit
+				$text = preg_replace("#<!-- s([a-zA-Z:;-=]+) -->(.+)<!-- (.+) -->#isU", "$1", $text);
+				$text = preg_replace("#<(.+) />#isU", "", $text);
+				$text = preg_replace("#\[(.+)\](.+)\[/(.+)\]#isU", "", $text);
+				$about .= $text."\r";
 			}
-			$personXML->addChild("about", $about);
+			$personXML->about = substr($about, 0, -1);
 			
 		}
 		
-		// add xml file
-		$zip->addFromString($root."/people.xml", $xml->asXML());
-
-		$zip->close();
-
-		// redirect to newly created file
-		redirectTo($zipFile);
+		if ($_GET['pics']) {
+			// add xml file
+			$zip->addFromString($root."/people.xml", $xml->asXML());
+			$zip->close();
+			
+			// redirect to newly created file
+			redirectTo($zipFile);
+			
+		} else {
+			header("Content-type: text/xml");
+			echo $xml->asXML();
+		}
 		
 		break;
 }
