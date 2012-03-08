@@ -2,7 +2,8 @@
 <form action="/shirts" method="post">
 <div class="section">
 	<div class="hl">
-		Hier kannst du dein Abi-Shirt bestellen.
+		Hier kannst du dein Abi-Shirt bestellen.<br />
+		Die Liste aus der Cafeteria gilt nicht mehr, da sie verschollen ist!
 	</div>
 	<div class="box">
 		<table>
