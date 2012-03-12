@@ -65,6 +65,22 @@
 			T-Shirts insgesamt: {$orders.sum}
 		</div>
 	</div>
+	<div class="box">
+		<table>
+			<tr style="font-weight: bold;">
+				<td>Name</td>
+				<td class="hcen">Größe</td>
+				<td class="hcen">Geschlecht</td>
+			</tr>
+			{foreach $orders['all'] as $order}
+			<tr>
+				<td>{$order['firstname']} {$order['lastname']}</td>
+				<td class="hcen">{$sizes[$order['size']]}</td>
+				<td class="hcen">{$genders[$order['gender']]}</td>
+			</tr>
+			{/foreach}
+		</table>
+	</div>
 </div>
 {/if}
 {include file="foot.tpl"}
