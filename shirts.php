@@ -33,7 +33,7 @@ if ($_vars['admin'] || $_user->data['user_id'] == 57) {
 	$_tpl->assign("orders", $orders);
 }
 
-
+$_tpl->assign("type", 5);
 $_tpl->assign("shirt", $shirt);
 $_tpl->assign("sizes", $sizes);
 $_tpl->assign("genders", $genders);

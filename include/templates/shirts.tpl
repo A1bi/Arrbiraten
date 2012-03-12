@@ -5,6 +5,11 @@
 		Hier kannst du dein Abi-Shirt bestellen.<br />
 		Die Liste aus der Cafeteria gilt nicht mehr, da sie verschollen ist!
 	</div>
+	{if $_vars.blocked.$type}
+	<div class="section hcen">
+		<b>Keine Bestellungen mehr möglich!</b>
+	</div>
+	{else}
 	<div class="box">
 		<table>
 			<tr>
@@ -28,11 +33,6 @@
 			</tr>
 		</table>
 	</div>
-	{if $_vars.blocked.$type}
-	<div class="section hcen">
-		<b>Keine Änderungen mehr möglich!</b>
-	</div>
-	{else}
 	<div class="submit">
 		<input type="submit" name="save" value="speichern" class="btn" />
 	</div>
