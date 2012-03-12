@@ -3,11 +3,31 @@ include('include/main.php');
 kickGuests(true);
 
 loadComponent("pics");
-$pics = new pics(0);
+
+function correctForumPost($text) {
+	// remove phpbb shit
+	$text = preg_replace("#<!-- s([a-zA-Z:;-=()]+) -->(.+)<!-- (.+) -->#isU", "$1", $text);
+	//$text = preg_replace("#<(.+) />#isU", "", $text);
+	$text = preg_replace("#\[(.+)\](.+)\[/(.+)\]#isU", "", $text);
+	return $text;
+}
+
+function correctText($text) {
+	// special characters
+	$text = preg_replace("#&quot;(.+)&quot;#isU", "„$1“", $text);
+	// remove double paragraphs
+	$text = preg_replace("#(\r\n)++#isU", "\r\n", $text);
+	// remove closing paragraph
+	$text = preg_replace("#([\r|\n])+ *$#isU", "", $text);
+	return $text;
+}
+
 
 switch ($_GET['action']) {
 	
 	case "story":
+		$pics = new pics(0);
+		
 		$result = $_db->query('SELECT id, file, filename, subject, teacher FROM stories WHERE id = ?', array($_GET['id']));
 		$story = $result->fetch();
 		
@@ -48,6 +68,8 @@ switch ($_GET['action']) {
 		break;
 		
 	case "profiles":
+		$pics = new pics(4);
+		
 		if ($_GET['pics']) {
 			// create zip file
 			$zip = new ZipArchive();
@@ -63,7 +85,7 @@ switch ($_GET['action']) {
 			
 		$xml = new SimpleXMLElement("<people />");
 		
-		$result = $_db->query('SELECT * FROM people');
+		$result = $_db->query('SELECT * FROM people ORDER BY firstname ASC');
 		while ($person = $result->fetch()) {
 			// add basic info
 			$personXML = $xml->addChild("person");
@@ -72,8 +94,11 @@ switch ($_GET['action']) {
 			
 			// add photos
 			$picsXML = $personXML->addChild("pics");
-			$result2 = $_db->query('SELECT type, pic FROM pics WHERE (type = 1 OR type = 4) AND owner = ? ORDER BY type DESC', array($person['user']));
-			while ($pic = $result2->fetch()) {
+			$pics->setType(4);
+			$allPics = $pics->getAll($person['user']);
+			$pics->setType(1);
+			$allPics = array_merge_recursive($allPics, $pics->getAll($person['user']));
+			foreach ($allPics as $pic) {
 				$picsXML->addChild("pic", $pic['pic']);
 				if ($_GET['pics']) {
 					$zip->addFile($_base."gfx/cache/pics/full/".$pic['pic'].".jpg", $photos."/".$pic['pic'].".jpg");
@@ -119,24 +144,30 @@ switch ($_GET['action']) {
 			);
 			$result2 = $_db->query('SELECT field, value FROM profile_fields WHERE user = ?', array($person['user']));
 			$values = $_db->fetchAll($result2, "field");
+			$fieldsXML = $personXML->addChild("fields");
 			foreach ($fields as $field => $info) {
-				$profile .= $info['caption'].":\t".$values[$field]['value']."\r";
+				$value = correctText($values[$field]['value']);
+				if (empty($value) || $value == "-") continue;
+				
+				if ($field == "birthday") {
+					$date = explode(".", $value);
+					for ($i = 0; $i < 2; $i++) {
+						if (strlen($date[$i])<2) $date[$i] = "0".$date[$i];
+					}
+					if (strlen($date[2])<3) $date[2] = "19".$date[$i];
+					$value = implode(".", $date);
+				}
+				
+				$fieldXML = $fieldsXML->addChild("field");
+				$fieldXML->addChild("caption", $info['caption']);
+				$fieldXML->value = $value;
 			}
-			$personXML->profile = $profile;
 			
 			// add about
 			$about = "";
 			$result2 = $_db->query('SELECT post_text AS text FROM phpbb_posts WHERE topic_id = ? ORDER BY post_id ASC LIMIT 1, 999', array($person['topic']));
 			while ($post = $result2->fetch()) {
-				$text = nl2br($post['text']);
-				// remove double paragraphs
-				$text = preg_replace("#\r( *)\r#isU", "\r", $text);
-				// remove closing paragraph
-				$text = preg_replace("#(\\r+)( *)$#isU", "", $text);
-				// remove phpbb shit
-				$text = preg_replace("#<!-- s([a-zA-Z:;-=]+) -->(.+)<!-- (.+) -->#isU", "$1", $text);
-				$text = preg_replace("#<(.+) />#isU", "", $text);
-				$text = preg_replace("#\[(.+)\](.+)\[/(.+)\]#isU", "", $text);
+				$text = correctText(correctForumPost($post['text']));
 				$about .= $text."\r";
 			}
 			$personXML->about = substr($about, 0, -1);
@@ -157,5 +188,47 @@ switch ($_GET['action']) {
 		}
 		
 		break;
+		
+	case "topic":
+		header("Content-Type: text/html; charset=UTF-8");
+		$result = $_db->query('SELECT post_text AS text FROM phpbb_posts WHERE topic_id = ?', array($_GET['id']));
+		while ($post = $result->fetch()) {
+			$text = correctText(correctForumPost($post['text']));
+			echo $text."\r";
+		}
+		
+		break;
+		
+	case "names":
+		header("Content-Type: text/html; charset=UTF-8");
+		$result = $_db->query('SELECT firstname, lastname FROM people ORDER BY firstname ASC');
+		while ($person = $result->fetch()) {
+			echo $person['firstname'] . " " . $person['lastname'] . " - ";
+		}
+		
+		break;
+		
+	case "pics":	
+		$zip = new ZipArchive();
+		
+		// create zip file
+		$zipFile = "/media/pics.zip";
+		$zip->open($_base.$zipFile, ZIPARCHIVE::OVERWRITE);
+		$root = "Collagenfotos";
+		$zip->addEmptyDir($root);
+
+		// add all photos
+		$result = $_db->query('SELECT pic FROM pics WHERE type = 2');
+		while ($pic = $result->fetch()) {
+			$zip->addFile($_base."gfx/cache/pics/full/".$pic['pic'].".jpg", $root."/".$pic['pic'].".jpg");
+		}
+
+		$zip->close();
+
+		// redirect to newly created file
+		redirectTo($zipFile);
+
+		break;
+		
 }
 ?>
