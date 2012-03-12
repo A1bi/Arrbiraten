@@ -24,7 +24,7 @@ if ($_POST['save']) {
 if ($_vars['admin'] || $_user->data['user_id'] == 57) {
 	$orders = array(0 => array(), 1 => array(), "sum" => 0, "all" => array());
 
-	$result = $_db->query('SELECT p.firstname, p.lastname, s.size, s.gender FROM shirts AS s, people AS p WHERE s.`order` = 1 AND s.user = p.user');
+	$result = $_db->query('SELECT p.firstname, p.lastname, s.size, s.gender FROM shirts AS s, people AS p WHERE s.`order` = 1 AND s.user = p.user ORDER BY p.firstname ASC');
 	$orders['all'] = $result->fetchAll();
 	foreach ($orders['all'] as $order) {
 		$orders[$order['gender']][$order['size']]++;
