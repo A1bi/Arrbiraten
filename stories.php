@@ -1,61 +1,64 @@
 <?php
 include('include/main.php');
 kickGuests();
+$type = 3;
 
 loadComponent("pics");
 $pics = new pics(3);
 
-if ($_POST['create']) {
-	
-	$id = createId(6, "stories", "file");
-	$filename = $_base."media/".$id;
-	if (move_uploaded_file($_FILES['file']['tmp_name'], $filename)) {
-		$_db->query('INSERT INTO stories VALUES (null, ?, ?, ?, ?, ?, ?, 0)', array($_POST['subject'], $_POST['teacher'], $id, $_FILES['file']['name'], $_user->data['user_id'], time()));
-		
-		redirectTo();
-	}
+if (!$_vars['blocked'][$type]) {
+	if ($_POST['create']) {
 
-} else if (!empty($_REQUEST['story'])) {
-	if ($_vars['admin']) {
-		$result = $_db->query('SELECT id, file FROM stories WHERE id = ?', array($_REQUEST['story']));
-	} else {
-		$result = $_db->query('SELECT id, file FROM stories WHERE id = ? AND user = ?', array($_REQUEST['story'], $_user->data['user_id']));
-	}
-	$story = $result->fetch();
-	
-	if (!empty($story['id'])) {
-		
-		if ($_GET['action'] == "resetDownloaded" && $_vars['admin']) {
-			$_db->query('UPDATE stories SET downloaded = 0 WHERE id = ?', array($story['id']));
-			
+		$id = createId(6, "stories", "file");
+		$filename = $_base."media/".$id;
+		if (move_uploaded_file($_FILES['file']['tmp_name'], $filename)) {
+			$_db->query('INSERT INTO stories VALUES (null, ?, ?, ?, ?, ?, ?, 0)', array($_POST['subject'], $_POST['teacher'], $id, $_FILES['file']['name'], $_user->data['user_id'], time()));
+
+			redirectTo();
+		}
+
+	} else if (!empty($_REQUEST['story'])) {
+		if ($_vars['admin']) {
+			$result = $_db->query('SELECT id, file FROM stories WHERE id = ?', array($_REQUEST['story']));
 		} else {
-		
-			$filename = $_base."media/".$story['file'];
-			if (!empty($_FILES['newFile']['name'])) {
-				if (move_uploaded_file($_FILES['newFile']['tmp_name'], $filename)) {
-					$_db->query('UPDATE stories SET filename = ?, updated = ? WHERE id = ?', array($_FILES['newFile']['name'], time(), $story['id']));
-				}
+			$result = $_db->query('SELECT id, file FROM stories WHERE id = ? AND user = ?', array($_REQUEST['story'], $_user->data['user_id']));
+		}
+		$story = $result->fetch();
 
-			} elseif ($_GET['action'] == "del") {
-				// delete all pics associated with this story
-				$allPics = $pics->getAll($story['id']);
-				foreach ($allPics as $pic) {
-					$pics->del($pic['id'], $story['id']);
-				}
+		if (!empty($story['id'])) {
 
-				// delete document
-				unlink($filename);
-
-				$_db->query('DELETE FROM stories WHERE id = ?', array($story['id']));
+			if ($_GET['action'] == "resetDownloaded" && $_vars['admin']) {
+				$_db->query('UPDATE stories SET downloaded = 0 WHERE id = ?', array($story['id']));
 
 			} else {
-				$pics->handleActions("stories", $story['id']);
-			}
-		
-		}	
+
+				$filename = $_base."media/".$story['file'];
+				if (!empty($_FILES['newFile']['name'])) {
+					if (move_uploaded_file($_FILES['newFile']['tmp_name'], $filename)) {
+						$_db->query('UPDATE stories SET filename = ?, updated = ? WHERE id = ?', array($_FILES['newFile']['name'], time(), $story['id']));
+					}
+
+				} elseif ($_GET['action'] == "del") {
+					// delete all pics associated with this story
+					$allPics = $pics->getAll($story['id']);
+					foreach ($allPics as $pic) {
+						$pics->del($pic['id'], $story['id']);
+					}
+
+					// delete document
+					unlink($filename);
+
+					$_db->query('DELETE FROM stories WHERE id = ?', array($story['id']));
+
+				} else {
+					$pics->handleActions("stories", $story['id']);
+				}
+
+			}	
+		}
+
+		redirectTo("/stories");
 	}
-	
-	redirectTo("/stories");
 }
 
 if ($_vars['admin']) {
@@ -75,6 +78,7 @@ while ($story = $result->fetch()) {
 	$stories[] = $story;
 }
 
+$_tpl->assign("type", $type);
 $_tpl->assign("stories", $stories);
 $_tpl->display("stories.tpl");
 

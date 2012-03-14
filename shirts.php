@@ -1,6 +1,7 @@
 <?php
 include('include/main.php');
 kickGuests();
+$type = 5;
 
 $sizes = array("S", "M", "L", "XL", "XXL", "XXXL");
 $genders = array("weiblich", "männlich");
@@ -12,7 +13,7 @@ if (empty($shirt['id'])) {
 	$_db->query('INSERT INTO shirts VALUES (null, ?, 0, 0, 0)', array($_user->data['user_id']));
 }
 
-if ($_POST['save']) {
+if ($_POST['save'] && !$_vars['blocked'][$type]) {
 	$size = min(count($sizes), max($_POST['size'], 0));
 	$gender = min(1, max($_POST['gender'], 0));
 	$_db->query('UPDATE shirts SET `order` = ?, size = ?, gender = ? WHERE user = ?', array(!empty($_POST['order']), $size, $gender, $_user->data['user_id']));
@@ -34,7 +35,7 @@ if ($_vars['admin'] || $_user->data['user_id'] == 57) {
 	$_tpl->assign("orders", $orders);
 }
 
-$_tpl->assign("type", 5);
+$_tpl->assign("type", $type);
 $_tpl->assign("shirt", $shirt);
 $_tpl->assign("sizes", $sizes);
 $_tpl->assign("genders", $genders);

@@ -5,6 +5,11 @@
 		Hier kannst du Kursberichte hochladen. Bitte lade Bericht und Kursfotos separat hoch. Das funktioniert so:
 		<br />Lade deinen Bericht als Dokument (Format egal) hoch. Nach dem Hochladen erscheint der Bericht unten in der Liste, wo du dann auch die Fotos hochladen kannst.
 	</div>
+	{if $_vars.blocked.$type}
+	<div class="section hcen">
+		<b>Es werden keine Kursberichte mehr angenommen!</b>
+	</div>
+	{else}
 	<div class="box newStory">
 		<table>
 			<tr>
@@ -24,6 +29,7 @@
 			<input type="submit" name="create" value="Bericht hochladen" class="btn" />
 		</div>
 	</div>
+	{/if}
 </div>
 </form>
 <div class="section">
@@ -39,9 +45,11 @@
 			<div class="subject">{$story.subject|escape} {$story.teacher|escape}</div>
 			<div class="filename">{$story.filename|escape}{if $_vars.admin} - von {$story.firstname} {$story.lastname}{/if}</div>
 		</div>
+		{if !$_vars.blocked.$type}
 		<div class="actions">
 			<span class="s_pics">Kursfotos anzeigen/hochladen</span> - <span class="s_reupload">Bericht neu hochladen</span> - <a href="?action=del&amp;story={$story.id}" onclick="return confirm('Bericht wirklich löschen?');">Bericht löschen</a>{if $_vars.admin} - <a href="/download?action=story&amp;id={$story.id}">Download</a> ({if $story.downloaded < 1}-{elseif $story.updated > $story.downloaded}!!!{else}ok{/if}) <a href="?action=resetDownloaded&amp;story={$story.id}">R</a>{/if}
 		</div>
+		{/if}
 		<div class="reupload newStory">
 			<div class="hl">
 				Du kannst den Bericht hier neu hochladen. Dabei wird die alte Datei ersetzt.
