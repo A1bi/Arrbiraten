@@ -1,4 +1,5 @@
 RewriteEngine on
+RewriteRule ^lists/([a-z]+)$ /lists.php?list=$1
 RewriteRule ^([a-z]+)$ $1.php [QSA]
 
 php_value max_execution_time 400
