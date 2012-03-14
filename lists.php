@@ -23,7 +23,7 @@ switch ($_GET['list']) {
 
 		$people = array("sum" => 0, "all" => array());
 
-		$result = $_db->query('SELECT p.firstname, p.lastname, l.* FROM lists AS l, people AS p WHERE p.user = l.user ORDER BY p.firstname ASC');
+		$result = $_db->query('SELECT p.firstname, p.lastname, l.* FROM lists AS l, people AS p WHERE p.user = l.user AND l.dish != "" ORDER BY p.firstname ASC');
 		$people['all'] = $result->fetchAll();
 
 		$_tpl->assign("type", $type);

@@ -1,5 +1,5 @@
 {include file="head.tpl" title="Planung offizieller Teil"}
-<form action="/lists" method="post">
+<form action="/lists/official" method="post">
 <div class="section">
 	<div class="hl">
 		Damit alles richtig geplant werden kann, bitten wir dich hier anzugeben, was du an Essen für die offizielle Verabschiedung zur Verfügung stellen kannst.
@@ -39,7 +39,7 @@
 			{foreach $people['all'] as $person}
 			<tr>
 				<td>{$person['firstname']} {$person['lastname']}</td>
-				<td class="hcen">{$person['dish']|escape|default:"-"}</td>
+				<td class="hcen">{$person['dish']|escape}</td>
 			</tr>
 			{/foreach}
 		</table>
