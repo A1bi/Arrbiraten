@@ -39,6 +39,13 @@
 					</td>
 					<td class="value"><input type="file" name="file" /></td>
 				</tr>
+				<tr>
+					<td class="caption">
+						Abschnitt ab:
+						<div>Minute und Sekunde<br />z.B. 01:29<br />nur falls es noch nicht von dir geschnitten ist</div>
+					</td>
+					<td class="value"><select name="min">{for $i=0 to 10}<option>{if $i < 10}0{/if}{$i}</option>{/for}</select> : <select name="sec">{for $i=0 to 59}<option>{if $i < 10}0{/if}{$i}</option>{/for}</select></td>
+				</tr>
 			</table>
 		</div>
 		<div class="hidden">
