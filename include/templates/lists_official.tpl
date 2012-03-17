@@ -1,4 +1,3 @@
-{include file="head.tpl" title="Planung offizieller Teil"}
 <form action="/lists/official" method="post">
 <div class="section">
 	<div class="hl">
@@ -26,23 +25,3 @@
 	{/if}
 </div>
 </form>
-<div class="section">
-	<div class="hl">
-		Übersicht über die Teilnehmer
-	</div>
-	<div class="box">
-		<table>
-			<tr style="font-weight: bold;">
-				<td>Name</td>
-				<td class="hcen">Essen</td>
-			</tr>
-			{foreach $people['all'] as $person}
-			<tr>
-				<td>{$person['firstname']} {$person['lastname']}</td>
-				<td class="hcen">{$person['dish']|escape}</td>
-			</tr>
-			{/foreach}
-		</table>
-	</div>
-</div>
-{include file="foot.tpl"}

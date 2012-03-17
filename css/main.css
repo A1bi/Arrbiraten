@@ -28,6 +28,9 @@ table {
 .hcen {
 	text-align: center;
 }
+.hidden {
+	display: none;
+}
 
 /* --- main layout elements --- */
 .headline {

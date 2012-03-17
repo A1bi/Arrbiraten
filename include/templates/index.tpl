@@ -9,6 +9,10 @@
 			<a href="/lists/official" class="hl">Planung offizieller Teil</a>
 			Verschiedene Infos, die zur Planung der offiziellen Verabschiedung benötigt werden.
 		</div>
+		<div class="box">
+			<a href="/lists/song" class="hl">Einlauflied</a>
+			Sende dein persönliches Lied für die Zeugnisvergabe ein.
+		</div>
 	</div>
 	<div class="section">
 		<div class="hl">Abgelaufene Aktionen</div>

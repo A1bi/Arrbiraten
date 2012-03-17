@@ -10,6 +10,10 @@
 {if $jsfile != ""}
 	<script src="/js/{$jsfile}.js{fileVersion file="/js/{$jsfile}.js"}"></script>
 {/if}
+{if $head != ""}
+{include file=$head}
+	
+{/if}
 </head>
 
 <body>
