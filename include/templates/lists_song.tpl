@@ -61,7 +61,7 @@
 						Abschnitt ab:
 						<div>Minute und Sekunde<br />z.B. 01:29</div>
 					</td>
-					<td class="value"><select name="min">{for $i=0 to 10}<option>{if $i < 10}0{/if}{$i}</option>{/for}</select> : <select name="sec">{for $i=0 to 59}<option>{if $i < 10}0{/if}{$i}</option>{/for}</select></td>
+					<td class="value"><select name="min2">{for $i=0 to 10}<option>{if $i < 10}0{/if}{$i}</option>{/for}</select> : <select name="sec2">{for $i=0 to 59}<option>{if $i < 10}0{/if}{$i}</option>{/for}</select></td>
 				</tr>
 			</table>
 		</div>

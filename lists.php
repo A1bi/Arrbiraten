@@ -54,13 +54,14 @@ switch ($_GET['list']) {
 		$_tpl->assign("sent", $sent);
 
 		if ($_POST['save'] && !$_vars['blocked'][$type] && !$sent) {
-			$start = $_POST['min'].":".$_POST['sec'];
 			if ($_POST['method'] == 0) {
+				$start = $_POST['min'].":".$_POST['sec'];
 				$file = createId(6, "lists_song", "file").$_FILES['file']['name'];
 				if (move_uploaded_file($_FILES['file']['tmp_name'], $_base."/media/".$file)) {
 					$_db->query('INSERT INTO lists_song VALUES (null, ?, ?, 1, "", ?, ?)', array($_user->data['user_id'], $_POST['title'], $start, $file));
 				}
 			} else {
+				$start = $_POST['min2'].":".$_POST['sec2'];
 				$_db->query('INSERT INTO lists_song VALUES (null, ?, ?, 0, ?, ?, "")', array($_user->data['user_id'], $_POST['title'], $_POST['url'], $start));
 			}
 			redirectTo();
