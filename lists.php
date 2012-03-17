@@ -43,7 +43,7 @@ switch ($_GET['list']) {
 		$list = array(
 			"title" => "Übersicht aller bereits eingesandten Einlauflieder",
 			"columns" => array(
-				"Name", "Lied"
+				"Interpret und Titel"
 			),
 			"rows" => array()
 		);
@@ -67,9 +67,9 @@ switch ($_GET['list']) {
 			redirectTo();
 		}
 
-		$result = $_db->query('SELECT p.firstname, p.lastname, l.title FROM lists_song AS l, people AS p WHERE p.user = l.user ORDER BY p.firstname ASC');
+		$result = $_db->query('SELECT title FROM lists_song ORDER BY title ASC');
 		while ($person = $result->fetch()) {
-			$list['rows'][] = array($person['firstname']." ".$person['lastname'], $person['title']);
+			$list['rows'][] = array($person['title']);
 		}
 		
 		break;
