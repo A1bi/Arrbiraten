@@ -60,7 +60,8 @@ switch ($_GET['list']) {
 					$_db->query('INSERT INTO lists_song VALUES (null, ?, ?, 1, "", "", ?)', array($_user->data['user_id'], $_POST['title'], $file));
 				}
 			} else {
-				$_db->query('INSERT INTO lists_song VALUES (null, ?, ?, 0, ?, ?, "")', array($_user->data['user_id'], $_POST['title'], $_POST['url'], $_POST['start']));
+				$start = $_POST['min'].":".$_POST['sec'];
+				$_db->query('INSERT INTO lists_song VALUES (null, ?, ?, 0, ?, ?, "")', array($_user->data['user_id'], $_POST['title'], $_POST['url'], $start));
 			}
 			redirectTo();
 		}
