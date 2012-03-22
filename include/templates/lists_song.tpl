@@ -1,4 +1,4 @@
-<form action="/lists/song" method="post" enctype="multipart/form-data">
+<form action="/lists?list=song" method="post" enctype="multipart/form-data">
 <div class="section">
 	<div class="hl">
 		Sende hier bitte dein persönliches Einlauflied für die Zeugnisvergabe ein. Dies gilt auch, falls du Simon schon etwas geschickt hast.
