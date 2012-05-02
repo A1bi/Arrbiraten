@@ -1,5 +1,6 @@
 RewriteEngine on
 RewriteRule ^lists/([a-z]+)$ /lists.php?list=$1
+RewriteRule ^download/([0-9]+)$ /download.php?action=file&id=$1
 RewriteRule ^([a-z]+)$ $1.php [QSA]
 
 php_value max_execution_time 400

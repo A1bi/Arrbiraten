@@ -84,6 +84,7 @@ table {
 	overflow: auto;
 }
 .navigation .box {
+	position: relative;
 	float: left;
 	width: 40%;
 	margin: 10px;
@@ -96,6 +97,9 @@ table {
 	display: inline-block;
 	width: 100%;
 	text-decoration: none;
+}
+.navigation .right {
+	float: right;
 }
 .navigation .hl:hover {
 	color: #f3f3f3;
@@ -135,6 +139,32 @@ table {
 	to {
 		opacity: 0;
 	}
+}
+.navigation .photos {
+	width: 90%;
+}
+.navigation .photos table {
+	text-align: center;
+	border-collapse: collapse;
+}
+.navigation .photos .concert {
+	vertical-align: top; border-left: 1px solid #cccccc;
+}
+.navigation .photos table .head {
+	font-weight: bold;
+	font-size: 16px;
+}
+.navigation .photos table .head td {
+	padding-bottom: 5px;
+	border-bottom: 1px solid #cccccc;
+}
+.navigation .photos table td {
+	width: 50%;
+}
+.navigation .photos .size {
+	font-size: 13px;
+	color: #666666;
+	vertical-align: middle;
 }
 
 /* --- login --- */
